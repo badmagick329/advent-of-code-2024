@@ -19,7 +19,16 @@ class LocationList
         return smallest;
     }
 
-    public int ContainsCount(int number) => LocationIds.Count(id => id == number);
+    public int CalculateSimilarityScoreWith(LocationList otherList)
+    {
+        var similarities = CalculateSimilaritiesWith(otherList);
+        List<int> similiarityMultiples = [];
+        for (int i = 0; i < similarities.Count; i++)
+        {
+            similiarityMultiples.Add(LocationIds[i] * similarities[i]);
+        }
+        return similiarityMultiples.Sum();
+    }
 
     private List<int> CalculateSimilaritiesWith(LocationList otherList)
     {
@@ -31,16 +40,7 @@ class LocationList
         return similarities;
     }
 
-    public int CalculateSimilarityScoreWith(LocationList otherList)
-    {
-        var similarities = CalculateSimilaritiesWith(otherList);
-        List<int> similiarityMultiples = [];
-        for (int i = 0; i < similarities.Count; i++)
-        {
-            similiarityMultiples.Add(LocationIds[i] * similarities[i]);
-        }
-        return similiarityMultiples.Sum();
-    }
+    public int ContainsCount(int number) => LocationIds.Count(id => id == number);
 
     public override string ToString()
     {
