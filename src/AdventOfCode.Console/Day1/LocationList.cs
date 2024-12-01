@@ -3,20 +3,18 @@ namespace AdventOfCode.Console.Day1;
 class LocationList
 {
     public List<int> LocationIds { get; init; }
-    private List<int> SortedIds { get; init; }
+    private int indexForSmallest = 0;
     public int Count => LocationIds.Count;
 
     public LocationList(List<int> locationIds)
     {
         LocationIds = locationIds;
-        SortedIds = [.. LocationIds.OrderByDescending(id => id)];
+        LocationIds.Sort();
     }
 
-    public int GetSmallestAndRemove()
+    public int GetSmallest()
     {
-        var smallest = SortedIds.Last();
-        SortedIds.Remove(smallest);
-        return smallest;
+        return LocationIds[indexForSmallest++];
     }
 
     public int CalculateSimilarityScoreWith(LocationList otherList)
@@ -40,7 +38,26 @@ class LocationList
         return similarities;
     }
 
-    public int ContainsCount(int number) => LocationIds.Count(id => id == number);
+    public int ContainsCount(int number)
+    {
+        var firstIndex = LocationIds.FindIndex(id => id == number);
+        if (firstIndex == -1)
+        {
+            return 0;
+        }
+        int count = 0;
+
+        for (int i = firstIndex; i < LocationIds.Count; i++)
+        {
+            if (LocationIds[i] != number)
+            {
+                break;
+            }
+            count++;
+        }
+
+        return count;
+    }
 
     public override string ToString()
     {

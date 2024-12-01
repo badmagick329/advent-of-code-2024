@@ -23,18 +23,13 @@ public class AocDay1 : AocDay
         var secondLocationList = locationLists[1];
         Debug.Assert(firstLocationList.Count == secondLocationList.Count);
 
-        List<Pair> pairs = [];
+        var totalDistance = 0;
         for (int i = 0; i < firstLocationList.Count; i++)
         {
-            pairs.Add(
-                new Pair
-                {
-                    First = firstLocationList.GetSmallestAndRemove(),
-                    Second = secondLocationList.GetSmallestAndRemove(),
-                }
+            totalDistance += Math.Abs(
+                firstLocationList.GetSmallest() - secondLocationList.GetSmallest()
             );
         }
-        var totalDistance = pairs.Select(p => p.Distance).Sum();
         System.Console.WriteLine($"Total distance: {totalDistance}");
     }
 
