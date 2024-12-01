@@ -10,18 +10,18 @@ class Program
         var day = GetDay(args);
         Console.WriteLine($"Day {day}");
         var aocDay = FromNumber(day);
-        Console.WriteLine("\nRunning part 1 test");
-        Console.WriteLine("-------------------");
-        aocDay.Part1Test();
-        Console.WriteLine("\nRunning part 1");
-        Console.WriteLine("-------------------");
-        aocDay.Part1();
-        Console.WriteLine("\nRunning part 2 test");
-        Console.WriteLine("-------------------");
-        aocDay.Part2Test();
-        Console.WriteLine("\nRunning part 2");
-        Console.WriteLine("-------------------");
-        aocDay.Part2();
+
+        Announce("Running part 1 test");
+        RunWithStopwatch(aocDay.Part1Test);
+
+        Announce("Running part 1");
+        RunWithStopwatch(aocDay.Part1);
+
+        Announce("Running part 2 test");
+        RunWithStopwatch(aocDay.Part2Test);
+
+        Announce("Running part 2");
+        RunWithStopwatch(aocDay.Part2);
     }
 
     static int GetDay(string[] args)
@@ -39,5 +39,19 @@ class Program
             1 => new Day1.AocDay1(),
             _ => throw new ArgumentException("Invalid day number"),
         };
+    }
+
+    static void Announce(string annoucement)
+    {
+        Console.WriteLine($"\n{annoucement}");
+        Console.WriteLine("-------------------");
+    }
+
+    static void RunWithStopwatch(Action action)
+    {
+        var start = Stopwatch.StartNew();
+        action();
+        start.Stop();
+        Console.WriteLine($"Elapsed time: {start.ElapsedMilliseconds}ms");
     }
 }
