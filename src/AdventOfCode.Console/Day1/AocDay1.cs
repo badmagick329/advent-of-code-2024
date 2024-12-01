@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode.Console.Day1;
 
@@ -14,7 +15,7 @@ public class AocDay1 : AocDay
         RunPart1("./src/AdventOfCode.Console/Day1/testinput1.txt");
     }
 
-    private static void RunPart1(string filename)
+    private void RunPart1(string filename)
     {
         var locationLists = LocationListsFromInputFile(filename);
         Debug.Assert(locationLists.Count == 2);
@@ -47,7 +48,7 @@ public class AocDay1 : AocDay
         RunPart2("./src/AdventOfCode.Console/Day1/testinput1.txt");
     }
 
-    private static void RunPart2(string filename)
+    private void RunPart2(string filename)
     {
         var locationLists = LocationListsFromInputFile(filename);
         Debug.Assert(locationLists.Count == 2);
@@ -58,31 +59,25 @@ public class AocDay1 : AocDay
         System.Console.WriteLine(similarityScore);
     }
 
-    private static List<LocationList> LocationListsFromInputFile(string filename)
+    private List<LocationList> LocationListsFromInputFile(string filename)
     {
-        var inputLines = File.ReadAllLines(filename);
+        var inputLines = File.ReadLines(filename);
+
         List<int> numbersForFirstList = [];
         List<int> numbersForSecondList = [];
 
-        foreach (var line in inputLines)
-        {
-            var parts = line.Split();
-            for (int i = 0; i < parts.Length; i++)
+        inputLines
+            .Select(line => Regex.Match(line, @"(\d+)\s+(\d+)"))
+            .Select(match =>
+                (L: int.Parse(match.Groups[1].Value), R: int.Parse(match.Groups[2].Value))
+            )
+            .ToList()
+            .ForEach(tup =>
             {
-                if (string.IsNullOrWhiteSpace(parts[i]))
-                {
-                    continue;
-                }
-                if (i % 2 == 0)
-                {
-                    numbersForFirstList.Add(Convert.ToInt32(parts[i]));
-                }
-                else
-                {
-                    numbersForSecondList.Add(Convert.ToInt32(parts[i]));
-                }
-            }
-        }
+                numbersForFirstList.Add(tup.L);
+                numbersForSecondList.Add(tup.R);
+            });
+
         return [new LocationList(numbersForFirstList), new LocationList(numbersForSecondList)];
     }
 }
