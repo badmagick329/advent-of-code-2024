@@ -39,17 +39,23 @@ public class AocDay1 : AocDay
 
     public override void Part2()
     {
-        RunPart2("./src/AdventOfCode.Console/Day1/input2.txt");
+        RunPart2("./src/AdventOfCode.Console/Day1/input1.txt");
     }
 
     public override void Part2Test()
     {
-        RunPart2("./src/AdventOfCode.Console/Day1/testinput2.txt");
+        RunPart2("./src/AdventOfCode.Console/Day1/testinput1.txt");
     }
 
-    private void RunPart2(string filename)
+    private static void RunPart2(string filename)
     {
-        throw new NotImplementedException();
+        var locationLists = LocationListsFromInputFile(filename);
+        Debug.Assert(locationLists.Count == 2);
+        var firstLocationList = locationLists[0];
+        var secondLocationList = locationLists[1];
+        Debug.Assert(firstLocationList.Count == secondLocationList.Count);
+        var similarityScore = firstLocationList.CalculateSimilarityScoreWith(secondLocationList);
+        System.Console.WriteLine(similarityScore);
     }
 
     private static List<LocationList> LocationListsFromInputFile(string filename)
