@@ -37,6 +37,7 @@ class Program
         return num switch
         {
             1 => new Day1.AocDay1(),
+            2 => new Day2.AocDay2(),
             _ => throw new ArgumentException("Invalid day number"),
         };
     }
