@@ -4,21 +4,28 @@ namespace AdventOfCode.Console.Day2;
 
 class Report
 {
-    public int[] Levels { get; private set; }
+    private int[] _levels;
+    public int[] Levels
+    {
+        get { return _levels; }
+        set
+        {
+            _levels = value;
+            Desc = IsDesc();
+        }
+    }
     public bool? Desc { get; private set; }
 
     public Report(int[] levels)
     {
+        Debug.Assert(levels.Length > 1);
         Levels = levels;
-        Debug.Assert(Levels.Length > 1);
-        Desc = IsDesc();
     }
 
     public Report(string levels)
     {
+        Debug.Assert(levels.Length > 1);
         Levels = levels.Split().Select(n => int.Parse(n)).ToArray();
-        Debug.Assert(Levels.Length > 1);
-        Desc = IsDesc();
     }
 
     public bool IsSafe()
@@ -28,25 +35,23 @@ class Report
 
     public bool IsSafePart2()
     {
-        var unsafeIndex = UnsafeOnIndex();
-        if (unsafeIndex == -1)
+        if (IsSafe())
         {
             return true;
         }
 
-        var origReport = new Report(Levels);
-        RemoveIndexFromLevels(unsafeIndex);
-        var safe = IsSafe();
-        if (safe)
+        var originalLevels = Levels;
+        for (int i = 0; i < Levels.Length; i++)
         {
-            return true;
+            RemoveIndexFromLevels(i);
+            if (IsSafe())
+            {
+                return true;
+            }
+            Levels = originalLevels;
         }
 
-        Levels = origReport.Levels;
-        Desc = origReport.Desc;
-        unsafeIndex = UnsafeOnIndex2();
-        RemoveIndexFromLevels(unsafeIndex);
-        return IsSafe();
+        return false;
     }
 
     private int UnsafeOnIndex()
@@ -63,33 +68,9 @@ class Report
         return -1;
     }
 
-    private int UnsafeOnIndex2()
-    {
-        var prev = Levels[0];
-        for (int i = 1; i < Levels.Length; i++)
-        {
-            if (!ChangeIsSafe(prev, Levels[i]))
-            {
-                return i;
-            }
-            prev = Levels[i];
-        }
-        return -1;
-    }
-
     private void RemoveIndexFromLevels(int index)
     {
-        int[] newLevels = new int[Levels.Length - 1];
-        for (int i = 0; i < Levels.Length; i++)
-        {
-            if (i == index)
-            {
-                continue;
-            }
-            newLevels[i > index ? i - 1 : i] = Levels[i];
-        }
-        Levels = newLevels;
-        Desc = IsDesc();
+        Levels = Levels.Where((_, i) => i != index).ToArray();
     }
 
     private bool ChangeIsSafe(int current, int next)
@@ -99,7 +80,6 @@ class Report
             return false;
         }
         var change = Desc.Value ? current - next : next - current;
-        // System.Console.WriteLine($"Change: {change}");
         return change >= 1 && change <= 3;
     }
 
