@@ -56,14 +56,12 @@ class Report
 
     private int UnsafeOnIndex()
     {
-        var prev = Levels[0];
         for (int i = 1; i < Levels.Length; i++)
         {
-            if (!ChangeIsSafe(prev, Levels[i]))
+            if (!ChangeIsSafe(Levels[i - 1], Levels[i]))
             {
                 return i - 1;
             }
-            prev = Levels[i];
         }
         return -1;
     }
@@ -85,25 +83,16 @@ class Report
 
     private bool? IsDesc()
     {
-        bool? desc = null;
-        for (int i = 1; i < Levels.Length; i++)
+        return Enumerable
+            .Range(1, Levels.Length - 1)
+            .Select(i => Levels[i].CompareTo(Levels[i - 1]))
+            .FirstOrDefault(comp => comp != 0) switch
         {
-            if (Levels[i] < Levels[i - 1])
-            {
-                desc = true;
-                break;
-            }
-            else if (Levels[i] > Levels[i - 1])
-            {
-                desc = false;
-                break;
-            }
-        }
-        return desc;
+            < 0 => true,
+            > 0 => false,
+            _ => null,
+        };
     }
 
-    public override string ToString()
-    {
-        return string.Join(" ", Levels);
-    }
+    public override string ToString() => string.Join(" ", Levels);
 }
