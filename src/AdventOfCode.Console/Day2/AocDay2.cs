@@ -20,12 +20,18 @@ public class AocDay2 : AocDay
 
     public override void Part2()
     {
-        throw new NotImplementedException();
+        var safeReportsCount = ReportsFromFile("./src/AdventOfCode.Console/Day2/input1.txt")
+            .Select(report => report.IsSafePart2())
+            .Count(s => s == true);
+        System.Console.WriteLine($"Safe reports: {safeReportsCount}");
     }
 
     public override void Part2Test()
     {
-        throw new NotImplementedException();
+        var safeReportsCount = ReportsFromFile("./src/AdventOfCode.Console/Day2/testinput1.txt")
+            .Select(report => report.IsSafePart2())
+            .Count(s => s == true);
+        System.Console.WriteLine($"Safe reports: {safeReportsCount}");
     }
 
     private static IEnumerable<Report> ReportsFromFile(string filename)
