@@ -29,11 +29,22 @@ public class AocDay3 : AocDay
 
     public override void Part2()
     {
-        throw new NotImplementedException();
+        var result = DoPart2("./src/AdventOfCode.Console/Day3/input.txt");
+        System.Console.WriteLine($"Mul result: {result}");
     }
 
     public override void Part2Test()
     {
-        throw new NotImplementedException();
+        var result = DoPart2("./src/AdventOfCode.Console/Day3/testinput2.txt");
+        System.Console.WriteLine($"Mul result: {result}");
+    }
+
+    private int DoPart2(string filename)
+    {
+        var input = File.ReadAllText(filename);
+        var pattern = @"mul\(\d{1,3},\d{1,3}\)|don't\(\)|do\(\)";
+        var matches = Regex.Matches(input, pattern);
+        var parser = new InstructionsParser(matches.Select(m => m.Value).ToArray());
+        return parser.Parse();
     }
 }
