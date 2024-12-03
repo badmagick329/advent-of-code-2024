@@ -39,6 +39,7 @@ class Program
         {
             1 => new Day1.AocDay1(),
             2 => new Day2.AocDay2(),
+            3 => new Day3.AocDay3(),
             _ => throw new ArgumentException("Invalid day number"),
         };
     }
