@@ -1,7 +1,6 @@
 ﻿namespace AdventOfCode.Console;
 
 using System;
-using System.Collections;
 using System.Diagnostics;
 
 class Program
@@ -40,6 +39,7 @@ class Program
             1 => new Day1.AocDay1(),
             2 => new Day2.AocDay2(),
             3 => new Day3.AocDay3(),
+            4 => new Day4.AocDay4(),
             _ => throw new ArgumentException("Invalid day number"),
         };
     }
