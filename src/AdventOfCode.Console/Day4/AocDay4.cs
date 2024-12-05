@@ -18,19 +18,23 @@ class AocDay4 : AocDay
         );
         wordBoard.ReadBoard();
         System.Console.WriteLine($"Total matches: {wordBoard.MatchedCoordinatesList.Count}");
-        // foreach (var matchCoord in wordBoard.MatchedCoordinatesList)
-        // {
-        //     System.Console.WriteLine(matchCoord);
-        // }
     }
 
     public override void Part2()
     {
-        throw new NotImplementedException();
+        var wordBoard = new WordBoard2(
+            File.ReadAllLines("./src/AdventOfCode.Console/Day4/input.txt")
+        );
+        wordBoard.ReadBoard();
+        System.Console.WriteLine($"Total matches: {wordBoard.MasMatchCount}");
     }
 
     public override void Part2Test()
     {
-        throw new NotImplementedException();
+        var wordBoard = new WordBoard2(
+            File.ReadAllLines("./src/AdventOfCode.Console/Day4/testinput2.txt")
+        );
+        wordBoard.ReadBoard();
+        System.Console.WriteLine($"Total matches: {wordBoard.MasMatchCount}");
     }
 }
