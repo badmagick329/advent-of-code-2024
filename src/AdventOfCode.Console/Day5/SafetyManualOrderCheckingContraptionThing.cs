@@ -3,6 +3,7 @@ namespace AdventOfCode.Console.Day5;
 class SafetyManualOrderCheckingContraptionThing
 {
     public List<int> CorrectIndices { get; private set; } = [];
+    public List<int> IncorrectIndices { get; private set; } = [];
     public List<int[]> SafetyManuals { get; private set; } = [];
     private readonly ManualRules _manualRules = new();
 
@@ -35,9 +36,23 @@ class SafetyManualOrderCheckingContraptionThing
             {
                 CorrectIndices.Add(i);
             }
+            else
+            {
+                IncorrectIndices.Add(i);
+            }
         }
+    }
+
+    public int ApplyFixesTo(int manualIndex)
+    {
+        _manualRules.FixManualInPlace(SafetyManuals[manualIndex]);
+        return manualIndex;
     }
 
     public int MiddlePageFor(int manualIndex) =>
         SafetyManuals[manualIndex][SafetyManuals[manualIndex].Length / 2];
+
+    public string ManualToString(int manualIndex) => ManualToString(SafetyManuals[manualIndex]);
+
+    public static string ManualToString(int[] manual) => string.Join(",", manual);
 }
