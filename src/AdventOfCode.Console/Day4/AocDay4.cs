@@ -8,7 +8,7 @@ class AocDay4 : AocDay
             File.ReadAllLines("./src/AdventOfCode.Console/Day4/input.txt")
         );
         wordBoard.ReadBoard();
-        System.Console.WriteLine($"Total matches: {wordBoard.MatchedCoordinatesList.Count}");
+        System.Console.WriteLine($"Total matches: {wordBoard.MatchCount}");
     }
 
     public override void Part1Test()
@@ -17,7 +17,7 @@ class AocDay4 : AocDay
             File.ReadAllLines("./src/AdventOfCode.Console/Day4/testinput.txt")
         );
         wordBoard.ReadBoard();
-        System.Console.WriteLine($"Total matches: {wordBoard.MatchedCoordinatesList.Count}");
+        System.Console.WriteLine($"Total matches: {wordBoard.MatchCount}");
     }
 
     public override void Part2()
@@ -26,7 +26,7 @@ class AocDay4 : AocDay
             File.ReadAllLines("./src/AdventOfCode.Console/Day4/input.txt")
         );
         wordBoard.ReadBoard();
-        System.Console.WriteLine($"Total matches: {wordBoard.MasMatchCount}");
+        System.Console.WriteLine($"Total matches: {wordBoard.MatchCount}");
     }
 
     public override void Part2Test()
@@ -35,6 +35,6 @@ class AocDay4 : AocDay
             File.ReadAllLines("./src/AdventOfCode.Console/Day4/testinput2.txt")
         );
         wordBoard.ReadBoard();
-        System.Console.WriteLine($"Total matches: {wordBoard.MasMatchCount}");
+        System.Console.WriteLine($"Total matches: {wordBoard.MatchCount}");
     }
 }

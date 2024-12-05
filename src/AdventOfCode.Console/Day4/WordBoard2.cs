@@ -6,7 +6,7 @@ class WordBoard2
 {
     private readonly char[,] _board;
 
-    public int MasMatchCount = 0;
+    public int MatchCount = 0;
 
     public WordBoard2(string[] lines)
     {
@@ -30,15 +30,17 @@ class WordBoard2
                 {
                     continue;
                 }
+
                 var xShapeLtoR = XShapeLtoR(x, y);
                 var xShapeRtoL = XShapeRtoL(x, y);
                 if (xShapeLtoR is null || xShapeRtoL is null)
                 {
                     continue;
                 }
-                if (CheckForMatches(xShapeLtoR, xShapeRtoL))
+
+                if (ContainsMatch(xShapeLtoR, xShapeRtoL))
                 {
-                    MasMatchCount++;
+                    MatchCount++;
                 }
             }
         }
@@ -67,7 +69,7 @@ class WordBoard2
         return x > 0 && x < _board.GetLength(0) - 1 && y > 0 && y < _board.GetLength(1) - 1;
     }
 
-    private static bool CheckForMatches(char[] part1, char[] part2)
+    private static bool ContainsMatch(char[] part1, char[] part2)
     {
         return ContainsMas(part1) && ContainsMas(part2);
     }

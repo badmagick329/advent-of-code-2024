@@ -7,7 +7,7 @@ class WordBoard
     private readonly char[,] _board;
     private readonly XmasMatcher _xmasMatcher = new();
     private const int _maxLookUp = 4;
-    public List<MatchedCoordinates> MatchedCoordinatesList { get; private set; } = [];
+    public int MatchCount = 0;
 
     public WordBoard(string[] lines)
     {
@@ -58,11 +58,7 @@ class WordBoard
             readCoords[i] = coords[i];
             if (_xmasMatcher.State == MatchState.Successful)
             {
-                var matchedCoordinates = new MatchedCoordinates { Coordinates = readCoords };
-                if (!MatchedCoordinatesList.Contains(matchedCoordinates))
-                {
-                    MatchedCoordinatesList.Add(new MatchedCoordinates { Coordinates = readCoords });
-                }
+                MatchCount++;
             }
         }
     }
