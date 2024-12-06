@@ -41,6 +41,7 @@ class Program
             3 => new Day3.AocDay3(),
             4 => new Day4.AocDay4(),
             5 => new Day5.AocDay5(),
+            6 => new Day6.AocDay6(),
             _ => throw new ArgumentException("Invalid day number"),
         };
     }
